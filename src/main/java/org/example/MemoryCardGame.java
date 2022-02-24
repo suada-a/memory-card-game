@@ -1,5 +1,7 @@
 package org.example;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,6 +10,7 @@ public class MemoryCardGame {
         ArrayList<Card> cardSet = getCardSet();
         GameBoard gameBoard = new GameBoard(cardSet, 4, 5);
         gameBoard.setUpGUI();
+        instructions(gameBoard.getFrame());
     }
 
     public static Card getCard(String cardValue) {
@@ -21,6 +24,7 @@ public class MemoryCardGame {
                 "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"};
         String randomCardValue = "";
 
+        //Randomly select card value and add card and its duplicate to the card set.
         for (int i = 0; i < 10; i++) {
             randomCardValue = cardValues[(int) (Math.random() * cardValues.length)];
             Card card = getCard(randomCardValue);
@@ -31,5 +35,20 @@ public class MemoryCardGame {
 
         Collections.shuffle(cardSet);
         return cardSet;
+    }
+
+    public static void instructions(JFrame frame) {
+        JLabel label = new JLabel("<html>To play, flip over any two cards. " +
+                "<br>If the cards match, " +
+                "<br>they get taken off the board. " +
+                "<br>if the cards don't match, " +
+                "<br>he cards will flip back over. " +
+                "<br>To win, you must match all 10 pairs.<html>");
+
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        JOptionPane.showMessageDialog(frame,
+                label,
+                "Memory Game Instructions",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

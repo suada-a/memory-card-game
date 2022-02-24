@@ -17,6 +17,10 @@ public class GameBoard extends JFrame {
         this.columns = columns;
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
+
     public void setUpGUI() {
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setVisible(true);
