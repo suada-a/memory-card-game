@@ -30,6 +30,15 @@ public class Card extends JButton {
     public JButton getButton() {
         return button;
     }
+
+    public void flipCard() {
+        if (this.getButton().getIcon() == this.getBack()) {
+            this.getButton().setIcon(this.getFront());
+        } else {
+            this.getButton().setIcon(this.getBack());
+        }
+
+    }
 }
 
 

@@ -2,10 +2,15 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class MemoryCardGame {
+    static int flippedCards = 0;
+    static int matchedPairs = 0;
+
     public static void main(String[] args) {
         ArrayList<Card> cardSet = getCardSet();
         GameBoard gameBoard = new GameBoard(cardSet, 4, 5);
@@ -28,7 +33,9 @@ public class MemoryCardGame {
         for (int i = 0; i < 10; i++) {
             randomCardValue = cardValues[(int) (Math.random() * cardValues.length)];
             Card card = getCard(randomCardValue);
+            CardListener(card);
             Card duplicateCard = getCard(randomCardValue);
+            CardListener(duplicateCard);
             cardSet.add(i, card);
             cardSet.add(i + 1, duplicateCard);
         }
@@ -50,5 +57,16 @@ public class MemoryCardGame {
                 label,
                 "Memory Game Instructions",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void CardListener(final Card card) {
+        card.getButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == card.getButton()) {
+                    card.flipCard();
+                }
+            }
+        });
     }
 }
