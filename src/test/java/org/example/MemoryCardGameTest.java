@@ -25,13 +25,13 @@ public class MemoryCardGameTest {
     public void match() {
         Card card = new Card("two");
         Card card2 = new Card("two");
-        assertEquals(true, card.isMatch(card2));
+        assertTrue(card.isMatch(card2));
     }
 
     @Test
     public void notAMatch() {
         Card card = new Card("ace");
         Card card2 = new Card("two");
-        assertEquals(false, card.isMatch(card2));
+        assertFalse(card.isMatch(card2));
     }
 }

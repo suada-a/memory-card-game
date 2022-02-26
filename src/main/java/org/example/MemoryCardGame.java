@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,25 +12,28 @@ public class MemoryCardGame {
     static int rows = 4;
     static int columns = 5;
     static ArrayList<Card> flippedCards = new ArrayList<>();
-    static int matchedPairs = 0;
-
+    static GameBoard gameBoard;
+    static ArrayList<Card> cardSet = new ArrayList<>();
     public static void main(String[] args) {
-        ArrayList<Card> cardSet = getCardSet();
-        GameBoard gameBoard = new GameBoard(cardSet, rows, columns);
+        startGame();
+    }
+
+    private static void startGame() {
+        cardSet = getCardSet();
+        gameBoard = new GameBoard(cardSet, rows, columns);
         gameBoard.setUpGUI();
         instructions(gameBoard.getFrame());
     }
 
     public static Card getCard(String cardValue) {
-        final Card card = new Card(cardValue);
-        return card;
+        return new Card(cardValue);
     }
 
     public static ArrayList<Card> getCardSet() {
         ArrayList<Card> cardSet = new ArrayList<>();
         String[] cardValues = {"ace", "two", "three", "four", "five",
                 "six", "seven", "eight", "nine", "ten", "jack", "queen", "king"};
-        String randomCardValue = "";
+        String randomCardValue;
 
         //Randomly select card value and add card and its duplicate to the card set.
         for (int i = 0; i < (rows * columns) / 2; i++) {
@@ -84,6 +88,7 @@ public class MemoryCardGame {
                         }
                     }
                 }
+
             }
         });
     }
@@ -93,6 +98,14 @@ public class MemoryCardGame {
             if (flippedCards.get(0).isMatch(flippedCards.get(1))) {
                 flippedCards.get(0).getButton().setVisible(false);
                 flippedCards.get(1).getButton().setVisible(false);
+                cardSet.remove(flippedCards.get(0));
+                cardSet.remove(flippedCards.get(1));
+
+                if(cardSet.isEmpty()) {
+                    System.out.println("card set is empty");
+                    gameOver();
+                }
+                
             } else {
                 flippedCards.get(0).getButton().setEnabled(true);
                 flippedCards.get(1).getButton().setEnabled(true);
@@ -104,14 +117,30 @@ public class MemoryCardGame {
             flippedCards.remove(0);
         }
     }
-    public static boolean match(ArrayList<Card> flippedCards) {
-        String firstCardValue = flippedCards.get(0).getFront().toString();
-        String secondCardValue = flippedCards.get(1).getFront().toString();
 
-        if(firstCardValue.equals(secondCardValue)) {
-            matchedPairs++;
-            return true;
+    public static void gameOver() {
+        JLabel label = new JLabel("<html>You Won! " +
+                "<br>To play again, press New Game" +
+                "<br>To close the game, press exit. <html>");
+
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+
+        Object[] options = {"New Game", "Exit"};
+
+        int buttonPressed = JOptionPane.showOptionDialog(gameBoard.getFrame(),
+                label,
+                "Game Over",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if(buttonPressed == 0) {
+            startGame();
+        } else if(buttonPressed == 1) {
+            gameBoard.getFrame().dispatchEvent(new WindowEvent(gameBoard.getFrame(), WindowEvent.WINDOW_CLOSING));
         }
-        return false;
+        System.out.println(buttonPressed);
     }
 }

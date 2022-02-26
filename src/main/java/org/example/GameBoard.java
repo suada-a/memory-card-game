@@ -5,10 +5,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GameBoard extends JFrame {
-    private JFrame frame;
-    private ArrayList<Card> cardSet;
-    private int rows;
-    private int columns;
+    private final JFrame frame;
+    private final ArrayList<Card> cardSet;
+    private final int rows;
+    private final int columns;
 
     public GameBoard(ArrayList<Card> cardSet, int rows, int columns) {
         this.frame = new JFrame("Memory Game");

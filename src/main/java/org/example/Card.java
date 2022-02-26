@@ -3,20 +3,14 @@ package org.example;
 import javax.swing.*;
 
 public class Card extends JButton {
-    private String value;
-    private ImageIcon back;
-    private ImageIcon front;
-    private JButton button;
+    private final ImageIcon back;
+    private final ImageIcon front;
+    private final JButton button;
 
     public Card(String value) {
-        this.value = value;
         this.back = new ImageIcon("cards/back.png");
-        this.front = new ImageIcon("cards/" + this.value + ".png");
+        this.front = new ImageIcon("cards/" + value + ".png");
         this.button = new JButton(this.back);
-    }
-
-    public String getValue() {
-        return this.value;
     }
 
     public ImageIcon getBack() {
@@ -44,11 +38,7 @@ public class Card extends JButton {
     }
 
     public boolean isMatch(Card comparedCard) {
-        if(this.getFront().toString().equals(comparedCard.getFront().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.getFront().toString().equals(comparedCard.getFront().toString());
     }
 }
 
