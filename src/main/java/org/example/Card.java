@@ -31,13 +31,24 @@ public class Card extends JButton {
         return button;
     }
 
-    public void flipCard() {
+    public void flipUp() {
         if (this.getButton().getIcon() == this.getBack()) {
             this.getButton().setIcon(this.getFront());
-        } else {
+        }
+    }
+
+    public void flipDown() {
+        if (this.getButton().getIcon() == this.getFront()) {
             this.getButton().setIcon(this.getBack());
         }
+    }
 
+    public boolean isMatch(Card comparedCard) {
+        if(this.getFront().toString().equals(comparedCard.getFront().toString())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
